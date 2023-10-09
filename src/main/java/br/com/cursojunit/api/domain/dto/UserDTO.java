@@ -1,6 +1,6 @@
 package br.com.cursojunit.api.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +12,7 @@ public class UserDTO {
     private String name;
     private String email;
 
-    @JsonIgnore
+    //Acesso somente para escrita.Impede a leitura
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 }
