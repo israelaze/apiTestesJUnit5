@@ -28,7 +28,6 @@ public class UserController {
     }
 
     @GetMapping
-
     public ResponseEntity<List<UserDTO>> findAll(){
 
         return ResponseEntity.ok()
