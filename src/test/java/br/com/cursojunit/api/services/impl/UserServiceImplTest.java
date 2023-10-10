@@ -30,7 +30,7 @@ class UserServiceImplTest {
     private static final String PASSWORD = "1234";
     private static final int INDEX = 0;
     private static final String NAO_ENCONTRADO = "Objeto não encontrado";
-    public static final String EMAIL_JA_CADASTRADO = "Email já cadastrado no sistema.";
+    private static final String EMAIL_JA_CADASTRADO = "Email já cadastrado no sistema.";
 
     //cria uma instância real
     @InjectMocks
@@ -195,7 +195,5 @@ class UserServiceImplTest {
         user = new Users(ID, NAME, EMAIL, PASSWORD);
         userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
         optionalUser = Optional.of(new Users(ID, NAME, EMAIL, PASSWORD));
-
-
     }
 }
