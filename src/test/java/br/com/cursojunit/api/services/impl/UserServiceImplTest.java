@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +27,7 @@ class UserServiceImplTest {
     private static final String NAME = "Ana";
     private static final String EMAIL = "ana@bol.com";
     private static final String PASSWORD = "1234";
+    private static final int INDEX = 0;
 
     //cria uma instância real
     @InjectMocks
@@ -78,7 +80,23 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
+    void whenFindAllThenReturnAnListOfUsers() {
+        //mocando uma lista contendo apenas UM usuário
+        when(repository.findAll()).thenReturn(List.of(user));
+
+        List<Users> response = service.findAll();
+
+        assertNotNull(response);
+        //Espera apenas um usuário
+        assertEquals(1, response.size());
+
+        //Assegura que a classe é do mesmo tipo
+        assertEquals(Users.class, response.get(INDEX).getClass());
+
+        assertEquals(ID, response.get(INDEX).getId());
+        assertEquals(NAME, response.get(INDEX).getName());
+        assertEquals(EMAIL, response.get(INDEX).getEmail());
+        assertEquals(PASSWORD, response.get(INDEX).getPassword());
     }
 
     @Test
