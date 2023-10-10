@@ -1,6 +1,6 @@
 package br.com.cursojunit.api.services.impl;
 
-import br.com.cursojunit.api.domain.User;
+import br.com.cursojunit.api.domain.Users;
 import br.com.cursojunit.api.domain.dto.UserDTO;
 import br.com.cursojunit.api.repositories.UserRepository;
 import br.com.cursojunit.api.services.UserService;
@@ -17,30 +17,30 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final ModelMapper mapper;
-    private final UserRepository repository;
+    private ModelMapper mapper;
+    private UserRepository repository;
     @Override
-    public User findById(Integer id) {
+    public Users findById(Integer id) {
 
-        Optional<User> obj = repository.findById(id);
+        Optional<Users> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado."));
     }
 
-    public List<User> findAll(){
+    public List<Users> findAll(){
         return repository.findAll();
     }
 
     @Override
-    public User create(UserDTO obj) {
+    public Users create(UserDTO obj) {
         findByEmail(obj);
-        return repository.save(mapper.map(obj, User.class));
+        return repository.save(mapper.map(obj, Users.class));
     }
 
     @Override
-    public User update(UserDTO obj) {
+    public Users update(UserDTO obj) {
 
         findByEmail(obj);
-        return repository.save(mapper.map(obj, User.class));
+        return repository.save(mapper.map(obj, Users.class));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void findByEmail(UserDTO obj){
-        Optional<User> user = repository.findByEmail(obj.getEmail());
+        Optional<Users> user = repository.findByEmail(obj.getEmail());
 
         if(user.isPresent() && !user.get().getId().equals(obj.getId())){
             throw new DataIntegratyViolationException("Email já cadastrado no sistema.");

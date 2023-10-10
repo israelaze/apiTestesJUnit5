@@ -1,6 +1,6 @@
 package br.com.cursojunit.api.controllers;
 
-import br.com.cursojunit.api.domain.User;
+import br.com.cursojunit.api.domain.Users;
 import br.com.cursojunit.api.domain.dto.UserDTO;
 import br.com.cursojunit.api.services.UserService;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO obj){
 
-        User user = service.create(obj);
+        Users user = service.create(obj);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(ID)
                 .buildAndExpand(user.getId()).toUri();
@@ -48,7 +48,7 @@ public class UserController {
     @PutMapping(value = ID)
     public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO obj){
         obj.setId(id);
-        User user = service.update(obj);
+        Users user = service.update(obj);
 
         return ResponseEntity.ok().body(mapper.map(user, UserDTO.class));
     }
