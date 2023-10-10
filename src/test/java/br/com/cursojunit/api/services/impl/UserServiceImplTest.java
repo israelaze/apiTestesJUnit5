@@ -17,6 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -56,12 +57,19 @@ class UserServiceImplTest {
     //Buscar uma instância de user
     @Test
     void whenFindByIdThenReturnAnUserInstance() {
+
+        //Mocando o repositório
         when(repository.findById(anyInt())).thenReturn(optionalUser);
 
         Users response = service.findById(ID);
 
+        //Assegura que não é null
         assertNotNull(response);
+
+        //Assegura que são da mesma classe
         assertEquals(Users.class, response.getClass());
+
+        //Assegura que os valores dos atributos são iguais
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
@@ -100,7 +108,17 @@ class UserServiceImplTest {
     }
 
     @Test
-    void create() {
+    void whenCreateThenReturnSucess() {
+        when(repository.save(any())).thenReturn(user);
+
+        Users response = service.create(userDTO);
+
+        assertNotNull(response);
+        assertEquals(Users.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
