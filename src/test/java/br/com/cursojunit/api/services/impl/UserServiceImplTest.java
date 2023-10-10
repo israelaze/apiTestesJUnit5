@@ -28,7 +28,7 @@ class UserServiceImplTest {
     private static final String NAME = "Ana";
     private static final String EMAIL = "ana@bol.com";
     private static final String PASSWORD = "1234";
-    private static final int INDEX = 0;
+    private static final Integer INDEX = 0;
     private static final String NAO_ENCONTRADO = "Objeto não encontrado";
     private static final String EMAIL_JA_CADASTRADO = "Email já cadastrado no sistema.";
 

@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 public class UserController {
 
     public static final String ID = "/{id}";
-    private final ModelMapper mapper;
-    private final UserService service;
+    private ModelMapper mapper;
+    private UserService service;
 
     @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id){
