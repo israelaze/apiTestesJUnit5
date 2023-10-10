@@ -1,6 +1,6 @@
 package br.com.cursojunit.api.controllers.exceptions;
 
-import br.com.cursojunit.api.services.exceptions.DataIntegratyViolationException;
+import br.com.cursojunit.api.services.exceptions.DataIntegrityViolationException;
 import br.com.cursojunit.api.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -25,8 +25,8 @@ public class ControllerExceptionHandler {
 
     }
 
-    @ExceptionHandler(DataIntegratyViolationException.class)
-    public ResponseEntity<StandardError> dataIntegratyViolationException(DataIntegratyViolationException ex, HttpServletRequest request){
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest request){
         StandardError error = new StandardError(LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage(),
