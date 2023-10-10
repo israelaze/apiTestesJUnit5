@@ -29,6 +29,8 @@ class UserServiceImplTest {
     private static final String EMAIL = "ana@bol.com";
     private static final String PASSWORD = "1234";
     private static final int INDEX = 0;
+    private static final String NAO_ENCONTRADO = "Objeto não encontrado";
+    public static final String EMAIL_JA_CADASTRADO = "Email já cadastrado no sistema.";
 
     //cria uma instância real
     @InjectMocks
@@ -77,13 +79,13 @@ class UserServiceImplTest {
 
     @Test
     void whenFindByIdThenReturnAnObjectNotFoundException(){
-        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Objeto não encontrado."));
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(NAO_ENCONTRADO));
 
         try {
            service.findById(ID);
         }catch (Exception ex){
             assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("Objeto não encontrado.", ex.getMessage());
+            assertEquals(NAO_ENCONTRADO, ex.getMessage());
         }
     }
 
@@ -130,7 +132,7 @@ class UserServiceImplTest {
             service.create(userDTO);
         }catch (Exception ex){
             assertEquals(DataIntegrityViolationException.class, ex.getClass());
-            assertEquals("Email já cadastrado no sistema.", ex.getMessage());
+            assertEquals(EMAIL_JA_CADASTRADO, ex.getMessage());
 
         }
 
@@ -160,7 +162,7 @@ class UserServiceImplTest {
             service.update(userDTO);
         }catch (Exception ex){
             assertEquals(DataIntegrityViolationException.class, ex.getClass());
-            assertEquals("Email já cadastrado no sistema.", ex.getMessage());
+            assertEquals(EMAIL_JA_CADASTRADO, ex.getMessage());
         }
     }
 
@@ -168,10 +170,25 @@ class UserServiceImplTest {
     void deleteWithSuccess() {
         when(repository.findById(anyInt())).thenReturn(optionalUser);
 
+        //não fça nada quando o deleteById for chamado
         doNothing().when(repository).deleteById(anyInt());
+
         service.delete(ID);
 
+        //verificando quantas vezes o método foi chamado. Espero que seja apenas 1x
         verify(repository, times(1)).deleteById(anyInt());
+    }
+    @Test
+    void deleteWithObjectNotFoundException(){
+        when(repository.findById(anyInt()))
+                .thenThrow(new ObjectNotFoundException(NAO_ENCONTRADO));
+
+        try {
+            service.delete(ID);
+        }catch (Exception ex){
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals(NAO_ENCONTRADO, ex.getMessage());
+        }
     }
 
     private void startUser(){
