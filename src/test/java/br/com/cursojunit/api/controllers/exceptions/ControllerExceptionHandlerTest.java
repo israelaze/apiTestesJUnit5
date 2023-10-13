@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ControllerExceptionHandlerTest {
 
-    public static final String NAO_ENCONTRADO = "Objeto não encontrado";
+    private static final String NAO_ENCONTRADO = "Objeto não encontrado";
+
     @InjectMocks
     private ControllerExceptionHandler exceptionHandler;
 
