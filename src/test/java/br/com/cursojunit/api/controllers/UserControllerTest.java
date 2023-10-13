@@ -41,8 +41,8 @@ class UserControllerTest {
     @Mock
     private UserService service;
 
-    private Users user;
-    private UserDTO userDTO;
+    private Users user = new Users();
+    private UserDTO userDTO = new UserDTO();
 
     @BeforeEach
     void setUp() {
